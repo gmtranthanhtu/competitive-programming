@@ -1,0 +1,95 @@
+/*
+  Name: UVa 11218 - KTV
+  Author: 3T //mailto:kasparovandme@gmail.com
+  Date: 1/11/2012
+  Description: dp + bitmask
+  Time Limit: 3.000s
+*/
+
+#include <algorithm>
+#include <bitset>
+#include <cctype>
+#include <cmath>
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <map>
+#include <queue>
+#include <set>
+#include <stack>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+#define fr(i,a,b) for (int i = (a), _b = (b); i <= _b; i++)
+#define frr(i,a,b) for (int i = (a), _b = (b); i >= _b; i--)
+#define rep(i,n) for (int i = 0, _n = (n); i < _n; i++)
+#define repr(i,n) for (int i = (n) - 1; i >= 0; i--)
+#define FOR(i,a,b) for (int i = (a), _b = (b); i <= _b; i++)
+#define FORD(i,a,b) for (int i = (a), _b = (b); i >= _b; i--)
+#define REP(i,n) for (int i = 0, _n = (n); i < _n; i++)
+#define REPD(i,n) for (int i = (n) - 1; i >= 0; i--)
+#define foreach(it, ar) for ( typeof(ar.begin()) it = ar.begin(); it != ar.end(); it++ )
+#define fill(ar, val) memset(ar, val, sizeof(ar))
+#define debug(x) cout<<#x<<": "<<x<<endl
+
+#define uint64 unsigned long long
+#define int64 long long
+#define all(ar) ar.begin(), ar.end()
+#define pb push_back
+#define mp make_pair
+#define ff first
+#define ss second
+
+#define BIT(n) (1<<(n))
+#define AND(a,b) ((a) & (b))
+#define OR(a,b) ((a) | (b))
+#define XOR(a,b) ((a) ^ (b))
+#define sqr(x) ((x) * (x))
+
+#define PI 3.1415926535897932385
+#define INF 1000111222
+#define EPS 1e-7
+#define MAXN 20000
+#define MOD 1000000007
+
+#define INP "test.inp"
+#define OUT "test.out"
+
+typedef pair<int, int> ii;
+typedef pair<int, ii> iii;
+typedef vector<ii> vii;
+typedef vector<int> vi;
+typedef vector<string> vs;
+
+template<typename T>inline T gcd(T a, T b){if (b == 0)return a;else return gcd(b, a % b);}
+template<typename T>inline T lcm(T a, T b){return (a * b) / gcd(a, b);}
+
+int n, t(0), m, a, b, c, w, f[1<<9];
+
+void update(int a, int b, int c, int w){
+    REP(i,1<<9){
+        if(i & (1 << a) || i & (1 << b) || i & (1 << c)) continue;
+        if(f[i] == -1) continue;
+        int tmp = i | (1 << a) | (1 << b) | (1 << c);
+        f[tmp] = max(f[tmp], f[i] + w);
+    }    
+}
+
+int main () {
+    #ifndef ONLINE_JUDGE
+    freopen(INP, "r", stdin); freopen(OUT, "w", stdout);
+    #endif
+    while(scanf("%d", &n) && n){
+        REP(i,1<<9) f[i] = -1;
+        f[0] = 0;
+        FOR(i,1,n){
+            scanf("%d%d%d%d", &a, &b, &c, &w);
+            update(a-1,b-1,c-1,w);    
+        }        
+        printf("Case %d: %d\n", ++t, f[(1<<9) - 1]);
+    }
+
+    return 0;
+}
